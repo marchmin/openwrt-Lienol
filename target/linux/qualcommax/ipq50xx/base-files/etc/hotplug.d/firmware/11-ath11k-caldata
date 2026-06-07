@@ -23,7 +23,7 @@ case "$FIRMWARE" in
 		ath11k_patch_mac $(macaddr_add $(get_mac_label_dt) 3) 0
 		ath11k_set_macflag
 		;;
-	cmcc,mr3000d-ci)
+	cmcc,mr3000d-04)
 		caldata_extract "0:art" 0x1000 0x20000
 		wlan_mac=$(mtd_get_mac_binary 0:art 12)
 		ath11k_patch_mac $wlan_mac 0
@@ -80,7 +80,7 @@ case "$FIRMWARE" in
 		ath11k_patch_mac $(macaddr_add $(get_mac_label_dt) 4) 0
 		ath11k_set_macflag
 		;;
-	cmcc,mr3000d-ci)
+	cmcc,mr3000d-04)
 		caldata_extract "0:art" 0x26800 0x20000
 		wlan_mac=$(mtd_get_mac_binary 0:art 18)
 		ath11k_patch_mac $wlan_mac 0
