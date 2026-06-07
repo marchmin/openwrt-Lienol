@@ -23,6 +23,13 @@ case "$FIRMWARE" in
 		ath11k_patch_mac $(macaddr_add $(get_mac_label_dt) 3) 0
 		ath11k_set_macflag
 		;;
+	cmcc,mr3000d-ci)
+		caldata_extract "0:art" 0x1000 0x20000
+		wlan_mac=$(mtd_get_mac_binary 0:art 12)
+		ath11k_patch_mac $wlan_mac 0
+		ath11k_set_macflag
+		ath11k_remove_regdomain
+		;;
 	jdcloud,re-cs-03)
 		caldata_extract_mmc "0:ART" 0x1000 0x20000
 		;;
