@@ -117,14 +117,16 @@ endef
 TARGET_DEVICES += iodata_wn-dax3000gr
 
 define Device/jdcloud_re-cs-03
-	$(call Device/FitImage)
-	$(call Device/EmmcImage)
+	$(call Device/FitImageLzma)
+	$(call Device/UbiFit)
 	DEVICE_VENDOR := JDCloud
 	DEVICE_MODEL := AX3000
-	DEVICE_DTS_CONFIG := config@mp03.5-c2
-	BLOCKSIZE := 64k
-	KERNEL_SIZE := 6144k
+	DEVICE_DTS_CONFIG := config@mp03.3-v1
 	SOC := ipq5018
+	BLOCKSIZE := 128k
+	PAGESIZE := 2048
+	IMAGE_SIZE := 59392k
+	NAND_SIZE := 128m
 endef
 TARGET_DEVICES += jdcloud_re-cs-03
 
