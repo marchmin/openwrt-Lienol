@@ -18,20 +18,20 @@
 	interrupt-parent = <&intc>;
 
 	aliases {
-		sdhc1 = &sdhc_1;
+		
 		serial0 = &blsp1_uart1;
 		ethernet0 = "/soc/dp1";
 		ethernet1 = "/soc/dp2";
-
-		led-boot = &led_red;
-		led-failsafe = &led_red;
-		led-running = &led_blue;
-		led-upgrade = &led_green;
+		
+		led-boot = &led_system_green;
+		led-failsafe = &led_system_green;
+		led-running = &led_system_green;
+		led-upgrade = &led_system_green;
 	};
 
 	chosen {
 		stdout-path = "serial0";
-		bootargs-append = " swiotlb=1 coherent_pool=2M";
+		bootargs-append = " root=/dev/ubiblock0_1 swiotlb=1 coherent_pool=2M";
 	};
 
 	reserved-memory {
@@ -190,7 +190,7 @@
 		reset {
 			label = "reset";
 			linux,code = <KEY_RESTART>;
-			gpios = <&tlmm 25 GPIO_ACTIVE_LOW>;
+			gpios = <&tlmm 27 GPIO_ACTIVE_LOW>;
 			linux,input-type = <1>;
 			debounce-interval = <60>;
 		};
@@ -209,20 +209,18 @@
 		pinctrl-0 = <&leds_pins>;
 		pinctrl-names = "default";
 
-		led_blue: status_blue {
-			label = "blue:status";
-			gpio = <&tlmm 31 GPIO_ACTIVE_HIGH>;
+		led_system_green: led_system_green {
+			label = "green:status";			   
+			gpio = <&tlmm 17 GPIO_ACTIVE_HIGH>;
 		};
-
-		led_green: status_green {
-			label = "green:status";
-			gpio = <&tlmm 32 GPIO_ACTIVE_HIGH>;
+		led_2g: led_2g {
+			label = "blue:2g";
+			gpio = <&tlmm 30 GPIO_ACTIVE_HIGH>;
 		};
-
-		led_red: status_red {
-			label = "red:status";
-			gpio = <&tlmm 33 GPIO_ACTIVE_HIGH>;
-		};
+		led_5g: led_5g {
+			label = "blue:5g";
+			gpio = <&tlmm 46 GPIO_ACTIVE_HIGH>;
+		};	
 	};
 };
 
@@ -371,16 +369,11 @@
 	};
 };
 
-&sdhc_1 {
-	pinctrl-0 = <&emmc_pins>;
-	pinctrl-names = "default";
-	status = "ok";
-};
 
 &tlmm {
 	button_pins: button_pins {
 		mux {
-			pins = "gpio25", "gpio38";
+			pins = "gpio27", "gpio38";
 			function = "gpio";
 			drive-strength = <8>;
 			bias-pull-up;
@@ -389,7 +382,7 @@
 
 	leds_pins: leds_pins {
 		mux {
-			pins = "gpio31", "gpio32", "gpio33";
+			pins = "gpio17", "gpio30", "gpio46";
 			function = "gpio";
 			drive-strength = <8>;
 			bias-pull-down;
@@ -411,25 +404,46 @@
 			bias-pull-up;
 		};
 	};
-
-	emmc_pins: emmc_pins {
-		emmc_clk {
+	
+	qspi_nand_pins: qspi_nand_pins {
+		clock {
 			pins = "gpio9";
-			function = "sdc1_clk";
+			function = "qspi_clk";
 			drive-strength = <8>;
 			bias-disable;
 		};
 
-		emmc_cmd {
+		cs {
 			pins = "gpio8";
-			function = "sdc1_cmd";
+			function = "qspi_cs";
 			drive-strength = <8>;
-			bias-pull-up;
+			bias-disable;
 		};
 
-		emmc_data {
-			pins = "gpio4", "gpio5", "gpio6", "gpio7";
-			function = "sdc1_data";
+		data0 {
+			pins = "gpio7";
+			function = "qspi0";
+			drive-strength = <8>;
+			bias-disable;
+		};
+
+		data1 {
+			pins = "gpio6";
+			function = "qspi1";
+			drive-strength = <8>;
+			bias-disable;
+		};
+
+		data2 {
+			pins = "gpio5";
+			function = "qspi2";
+			drive-strength = <8>;
+			bias-disable;
+		};
+
+		data3 {
+			pins = "gpio4";
+			function = "qspi3";
 			drive-strength = <8>;
 			bias-disable;
 		};
