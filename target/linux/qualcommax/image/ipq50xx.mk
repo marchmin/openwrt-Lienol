@@ -38,11 +38,11 @@ define Device/cmcc_pz-l8
 endef
 TARGET_DEVICES += cmcc_pz-l8
 
-define Device/cmcc_mr3000d-ci
+define Device/cmcc_mr3000d-04
 	$(call Device/FitImageLzma)
 	$(call Device/UbiFit)
 	DEVICE_VENDOR := CMCC
-	DEVICE_MODEL := MR3000D-CI
+	DEVICE_MODEL := MR3000D-04
 	DEVICE_DTS_CONFIG := config@mp03.3-v1
 	SOC := ipq5018
 	BLOCKSIZE := 128k
@@ -50,7 +50,7 @@ define Device/cmcc_mr3000d-ci
 	IMAGE_SIZE := 59392k
 	NAND_SIZE := 128m
 endef
-TARGET_DEVICES += cmcc_mr3000d-ci
+TARGET_DEVICES += cmcc_mr3000d-04
 
 define Device/elecom_wrc-x3000gs2
 	$(call Device/FitImageLzma)
